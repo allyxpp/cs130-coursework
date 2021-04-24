@@ -1,11 +1,14 @@
 /* You're welcome to change any of this! */
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0px;
-    font-family: Arial, sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 header, section {
     padding: 20px;
