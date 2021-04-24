@@ -19,9 +19,6 @@ h1 {
     background-color: #6247AA;
 }
 
-h2 > p {
-    background-color: #E2CFEA;
-}
 
 header, section {
     padding: 20px;
@@ -33,7 +30,7 @@ p, li {
 }
 
 #inspiration {
-    background-color: #A06CD5;
+    background-color: #E2CFEA;
     padding-top: 40px;
     padding-bottom: 40px;
     font-family: 'Raleway', sans-serif
