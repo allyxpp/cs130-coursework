@@ -10,15 +10,29 @@ body {
     margin: 0px;
     font-family: 'Raleway', sans-serif;
 }
+
+h1, h2{
+    font-family: 'Raleway', sans-serif;
+}
+
+h1 {
+    background-color: #6247AA;
+}
+
+
+
 header, section {
     padding: 20px;
+    font-family: 'Raleway', sans-serif
 }
 p, li {
     line-height: 1.5em;
+    font-family: 'Raleway', sans-serif
 }
 
 #inspiration {
-    background-color: #F0F0F0;
+    background-color: #102B3F;
     padding-top: 40px;
     padding-bottom: 40px;
+    font-family: 'Raleway', sans-serif
 }
