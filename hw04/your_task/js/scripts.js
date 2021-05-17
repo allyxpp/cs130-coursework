@@ -24,7 +24,7 @@ const getTracks = (term) => {
     url = baseURL + "?type=track&q=" + term;
     fetch(url)
         .then(response => response.json())
-        .then(data => displayArtist(data));
+        .then(data => displayTracks(data));
 };
 
 const getAlbums = (term) => {
@@ -35,6 +35,7 @@ const getAlbums = (term) => {
 };
 
 const getArtist = (term) => {
+    console.log("hi");
     url = baseURL + "?type=artist&q=" + term;
     fetch(url)
         .then(response => response.json())
@@ -53,7 +54,8 @@ document.querySelector('#search').onkeyup = (ev) => {
 
 
 const displayTracks = (foundtracks) => {
-    if (foundtracks == null) {
+    document.querySelector("#tracks").innerHTML = "";
+    if (foundtracks[0] == null) {
         document.querySelector("#tracks").innerHTML = "no tracks found :(";
     }
     else {
@@ -63,7 +65,7 @@ const displayTracks = (foundtracks) => {
             <img src="${foundtracks[t].album.image_url}">
             <i class="fas play-track fa-play" aria-hidden="true"></i>
             <div class="label">
-                <h3>${foundtracks[t].name}/h3>
+                <h3>${foundtracks[t].name}</h3>
                 <p>${foundtracks[t].artist.name}</p>
             </div>
         </section>`;
@@ -77,15 +79,15 @@ const displayTracks = (foundtracks) => {
 
 
 const displayArtist = (artist) => {
-    if (art == null) {
+    if (artist == null) {
         document.querySelector("#artist").innerHTML = "no artist found";
     } else {
-        template = `<section class="artist-card" id="${art.id}">
+        template = `<section class="artist-card" id="${artist.id}">
                         <div>
-                            <img src="${art.image_url}">
-                            <h3>${art.name}</h3>
+                            <img src="${artist.image_url}">
+                            <h3>${artist.name}</h3>
                             <div class="footer">
-                                <a href="${art.spotify_url}" target="_blank">
+                                <a href="" target="_blank">
                                     view on spotify
                                 </a>
                             </div>
@@ -93,3 +95,4 @@ const displayArtist = (artist) => {
                     </section>`;
     document.querySelector('#artist').innerHTML = template;
     }
+};
