@@ -16,11 +16,23 @@ const search = (ev) => {
     }
 }
 
+const playTrack = (ev) => {
+    // console.log(ev.currentTarget);
+    const elem = ev.currentTarget;
+    const previewURL = elem.dataset.previewTrack;
+    console.log(previewURL);
+    if (previewURL) {
+        audioPlayer.setAudioFile(previewURL);
+        audioPlayer.play();
+    } else {
+        console.log("there is no preview available for this track.")
+    }
+    document.querySelector('footer .track-item').innerHTML = elem.innerHTML;
+};
+
 const getTracks = (term) => {
-    console.log(`
-        get tracks from spotify based on the search term
-        "${term}" and load them into the #tracks section 
-        of the DOM...`);
+    console.log(`search term
+        "${term}"`);
     url = baseURL + "?type=track&q=" + term;
     fetch(url)
         .then(response => response.json())
@@ -28,14 +40,27 @@ const getTracks = (term) => {
 };
 
 const getAlbums = (term) => {
+    document.querySelector('#albums').innerHTML = "";
     console.log(`
-        get albums from spotify based on the search term
-        "${term}" and load them into the #albums section 
-        of the DOM...`);
+        search term
+        "${term}" `);
+    url = baseURL + '?type=album&q=' + term;
+    fetch(url)
+        .then(response => response.json())
+        .then((data) => {
+            if (data.length === 0) {
+                document.querySelector('#albums').innerHTML = 'no albums found! :(';
+                return;
+            }
+            
+            for (item of data) {
+                 document.querySelector('#albums').innerHTML += displayAlbums(item);
+            }
+            
+        })
 };
 
 const getArtist = (term) => {
-    console.log("hi");
     url = baseURL + "?type=artist&q=" + term;
     fetch(url)
         .then(response => response.json())
@@ -56,7 +81,7 @@ document.querySelector('#search').onkeyup = (ev) => {
 const displayTracks = (foundtracks) => {
     document.querySelector("#tracks").innerHTML = "";
     if (foundtracks[0] == null) {
-        document.querySelector("#tracks").innerHTML = "no tracks found :(";
+        document.querySelector("#tracks").innerHTML = "no tracks found! :(";
     }
     else {
         const lentracks = foundtracks.length;
@@ -72,15 +97,15 @@ const displayTracks = (foundtracks) => {
         document.querySelector("#tracks").innerHTML += template;
         }
     }
+    for (const elem of document.querySelectorAll('.track-item.preview')) {
+        elem.onclick = playTrack;
+    }
 
 };
 
-
-
-
 const displayArtist = (artist) => {
     if (artist == null) {
-        document.querySelector("#artist").innerHTML = "no artist found";
+        document.querySelector("#artist").innerHTML = "no artist found! :(";
     } else {
         template = `<section class="artist-card" id="${artist.id}">
                         <div>
@@ -95,4 +120,28 @@ const displayArtist = (artist) => {
                     </section>`;
     document.querySelector('#artist').innerHTML = template;
     }
+};
+
+
+
+const displayAlbums = (foundalbums) => {
+    // console.log(`${foundalbums[0].name}`);
+    // if (foundalbums == null) {
+    //     document.querySelector('#albums').innerHTML = "no tracks found :(";
+    // } else {
+        return `<section class="album-card" id="${foundalbums.id}">
+            <div>
+                <img src="${foundalbums.image_url}">
+                <h3>${foundalbums.name}</h3>
+                <div class="footer">
+                    <a href="${foundalbums.spotify_url}" target="_blank">
+                        view on spotify
+                    </a>
+                </div>
+            </div>
+            </section>`;
+        
+    // }
+
+
 };
